@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Contently.Core.Domain;
+using Contently.Core.Data.Interfaces;
+using Contently.Data.Dapper;
+using Contently.Core.Web.Routing;
 
 namespace Contently
 {
@@ -29,6 +33,9 @@ namespace Contently
         {
             // Add framework services.
             services.AddMvc();
+
+            // add data services
+            services.AddScoped<IDataService<Page>, MockPageRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,13 +54,27 @@ namespace Contently
                 app.UseExceptionHandler("/Home/Error");
             }
 
+           
             app.UseStaticFiles();
+           // app.UseIdentity();
+
+
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{controller=Home}/{action=Index}/{id?}");
+            //});
 
             app.UseMvc(routes =>
             {
+                // Put all routes first so they get handled first. The Contently UrlSLug handler should only try last. It'll also handle 404 errors
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
+
+                routes.Routes.Add(new UrlSlugRoute(routes.DefaultHandler));
+
             });
         }
     }
