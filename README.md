@@ -25,7 +25,7 @@ NOTE: This CMS is designed for .NET developers, it's really not designed to repl
 - Content editor
 - Search (something severely missing in most CMS's!) 
 - Extension to the membership system that'll include;
-... Paid memberships
-... Newsletter management 
+  - Paid memberships
+  - Newsletter management 
 - Maybe a basic plugin / extensibility feature that'll allow people to modify the platform
 
