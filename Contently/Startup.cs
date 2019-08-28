@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,7 +31,7 @@ namespace Contently
             services.AddMvc();
 
             // add data services
-            services.AddScoped<IDataService<Page>, MockPageRepository>();
+            services.AddScoped<IDataService<RoutablePage>, MockPageRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,7 +43,6 @@ namespace Contently
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-               // app.UseBrowserLink();
             }
             else
             {
@@ -57,14 +52,6 @@ namespace Contently
            
             app.UseStaticFiles();
            // app.UseIdentity();
-
-
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute(
-            //        name: "default",
-            //        template: "{controller=Home}/{action=Index}/{id?}");
-            //});
 
             app.UseMvc(routes =>
             {

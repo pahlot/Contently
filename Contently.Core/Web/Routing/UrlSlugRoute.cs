@@ -29,7 +29,7 @@ namespace Contently.Core.Web.Routing
             }
 
             //var urlSlugRepository = context.HttpContext.RequestServices.GetService<IRepository<Entity>>();
-            var urlSlugRepository = context.HttpContext.RequestServices.GetService<IDataService<Page>>();
+            var urlSlugRepository = context.HttpContext.RequestServices.GetService<IDataService<RoutablePage>>();
 
             // Get the slug that matches.
             //var urlSlug = await urlSlugRepository.Query().Include(x => x.EntityType).FirstOrDefaultAsync(x => x.Slug == requestPath);
@@ -40,7 +40,7 @@ namespace Contently.Core.Web.Routing
             var newRouteData = new RouteData(oldRouteData);
             newRouteData.Routers.Add(_target);
 
-            // If we got back a null value set, that means the URI did not match)
+            // If we got back a null, so we're dealing with a 404 or request for another page we don't manage
             if (page == null)
             {
                 // return;
@@ -49,7 +49,7 @@ namespace Contently.Core.Web.Routing
                 newRouteData.Values["code"] = 404;
             }
             else { // Managed
-                newRouteData.Values["controller"] = "Page"; //urlSlug.EntityType.RoutingController;
+                newRouteData.Values["controller"] = page.RoutingController;
 
                 if (page.IsPublished)
                 {

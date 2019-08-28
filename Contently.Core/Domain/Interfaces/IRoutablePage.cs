@@ -4,8 +4,21 @@ using System.Text;
 
 namespace Contently.Core.Domain.Interfaces
 {
-    public interface IPage
+    public interface IRoutablePage
     {
+        #region Route specific fields
+
+        /// <summary>
+        /// The area all the views and controllers live
+        /// </summary>
+        string AreaName { get; }
+
+        /// <summary>
+        /// The name of the controller which will handle calls and content delivery
+        /// </summary>
+        string RoutingController { get; }
+        
+        #endregion
         string Name { get; set; }
         string Slug { get; set; }
 
@@ -14,11 +27,10 @@ namespace Contently.Core.Domain.Interfaces
         string MetaKeywords { get; set; }
         string MetaDescription { get; set; }
 
+        string Title { get; set; }
         string Intro { get; set; }
-        string Content { get; set; }
-
-        bool IsDraft { get; set; }
-
+        IContentItem Content { get; set; }
+        
         bool IsPublished { get; set; }
         DateTime PublishDate { get; set; }
         DateTime UnPublishDate { get; set; }

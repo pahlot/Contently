@@ -15,9 +15,9 @@ namespace Contently.Controllers
         //    return View();
         //}
 
-        protected IDataService<Page> dataService;
+        protected IDataService<RoutablePage> dataService;
 
-        public PageController(IDataService<Page> ds)
+        public PageController(IDataService<RoutablePage> ds)
         {
             dataService = ds;
         }
