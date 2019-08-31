@@ -8,18 +8,21 @@ namespace Contently.Core.Web.Routing
 {
     public class UrlSlugRoute : IRouter
     {
-        private readonly IRouter _target;
+        private readonly IRouter target;
+        private readonly IContentDataService<RoutablePage> dataService;
 
-        public UrlSlugRoute(IRouter target)
+        public UrlSlugRoute(IRouter target, IContentDataService<RoutablePage> dataService)
         {
-            _target = target;
+            this.target = target;
+            this.dataService = dataService;
         }
 
         
 
         public async Task RouteAsync(RouteContext context)
         {
-            var requestPath = context.HttpContext.Request.Path.Value;
+            var requestPath = context.HttpContext.Request.Path.Value.ToLower();
+            bool isEditMode = false;
 
             // TODO: Add a lookup for a content managed root/home page
             if (!string.IsNullOrEmpty(requestPath) && requestPath[0] == '/')
@@ -28,17 +31,19 @@ namespace Contently.Core.Web.Routing
                 requestPath = requestPath.Substring(1);
             }
 
-            //var urlSlugRepository = context.HttpContext.RequestServices.GetService<IRepository<Entity>>();
-            var urlSlugRepository = context.HttpContext.RequestServices.GetService<IDataService<RoutablePage>>();
+            if (requestPath.Contains("/edit"))
+            {
+                isEditMode = true;
+                requestPath = requestPath.Replace("/edit", "");
+            }
 
             // Get the slug that matches.
-            //var urlSlug = await urlSlugRepository.Query().Include(x => x.EntityType).FirstOrDefaultAsync(x => x.Slug == requestPath);
-            var page = urlSlugRepository.FindOne(x => x.Slug == requestPath.ToLower());
+            var page = dataService.FindOne(x => x.Slug == requestPath.ToLower());
 
             // Invoke MVC controller/action
             var oldRouteData = context.RouteData;
             var newRouteData = new RouteData(oldRouteData);
-            newRouteData.Routers.Add(_target);
+            newRouteData.Routers.Add(target);
 
             // If we got back a null, so we're dealing with a 404 or request for another page we don't manage
             if (page == null)
@@ -50,10 +55,14 @@ namespace Contently.Core.Web.Routing
             }
             else { // Managed
                 newRouteData.Values["controller"] = page.RoutingController;
+                newRouteData.Values["pageId"] = page.Id;
 
-                if (page.IsPublished)
+                if (isEditMode) {
+                    newRouteData.Values["action"] = page.Content.Template.EditView;
+                }
+                else if (page.IsPublished)
                 {
-                    newRouteData.Values["action"] = "Index"; // urlSlug.EntityType.RoutingAction;
+                    newRouteData.Values["action"] = page.Content.Template.DisplayView; // urlSlug.EntityType.RoutingAction;
                 }
                 else
                 {
@@ -64,7 +73,7 @@ namespace Contently.Core.Web.Routing
 
 
             context.RouteData = newRouteData;
-            await _target.RouteAsync(context);
+            await target.RouteAsync(context);
         }
 
         public VirtualPathData GetVirtualPath(VirtualPathContext context)

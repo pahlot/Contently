@@ -1,0 +1,21 @@
+﻿@using Contently.Core.Domain.ContentTypes.Simple;
+
+@model Contently.Core.Domain.RoutablePage;
+
+@{
+    ViewBag.Title = Model.SeoTitle;
+
+    var content = (SimpleContent)Model.Content;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@Model.SeoTitle</title>
+</head>
+<body>
+    <textarea>@content.Body</textarea>
+</body>
+</html>

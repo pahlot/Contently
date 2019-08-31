@@ -5,6 +5,7 @@
     /// </summary>
     public interface IContentItem
     {
+        string Controller { get; }
        IContentTemplate Template { get; }
     }
 }

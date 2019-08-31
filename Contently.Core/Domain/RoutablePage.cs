@@ -4,9 +4,9 @@ using System;
 namespace Contently.Core.Domain
 {
     public class RoutablePage : EntityBase, IRoutablePage
-    {
+    { 
         public string AreaName => "";
-        public string RoutingController => "Page";
+        public string RoutingController => Content?.Controller;
 
         public string Title { get; set; }
 
@@ -18,12 +18,9 @@ namespace Contently.Core.Domain
         public string MetaDescription { get; set; }
         public string Intro { get; set; }
 
-        public string Content { get; set; }
-
-        public bool IsDraft { get; set; }
         public bool IsPublished { get; set; }
         public DateTime PublishDate { get; set; }
         public DateTime UnPublishDate { get; set; }
-       
+        public IContentItem Content { get; set; }
     }
 }

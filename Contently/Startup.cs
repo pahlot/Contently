@@ -7,6 +7,7 @@ using Contently.Core.Domain;
 using Contently.Core.Data.Interfaces;
 using Contently.Data.Dapper;
 using Contently.Core.Web.Routing;
+using Contently.Core.DiscoveryServices;
 
 namespace Contently
 {
@@ -31,7 +32,8 @@ namespace Contently
             services.AddMvc();
 
             // add data services
-            services.AddScoped<IDataService<RoutablePage>, MockPageRepository>();
+            services.AddScoped<IContentDataService<RoutablePage>, MockPageRepository>();
+            services.AddSingleton<ContentTypeDiscoveryService, ContentTypeDiscoveryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,7 +62,8 @@ namespace Contently
                     "default",
                     "{controller=Home}/{action=Index}/{id?}");
 
-                routes.Routes.Add(new UrlSlugRoute(routes.DefaultHandler));
+                // TODO: add all this into a registration extension so we're not duplicating code
+                routes.Routes.Add(new UrlSlugRoute(routes.DefaultHandler, new MockPageRepository()));
 
             });
         }

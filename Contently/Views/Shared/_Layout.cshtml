@@ -1,4 +1,11 @@
-﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+﻿@using Contently.Core.Domain;
+
+@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+@inject Contently.Core.Data.Interfaces.IContentDataService<RoutablePage> dataService
+
+@{
+    var menu = dataService.GetMenu();
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,6 +42,10 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    @foreach (var m in menu)
+                    {
+                        <li><a href="@m.Path">@m.Name</a></li>
+                    }
                 </ul>
             </div>
         </div>

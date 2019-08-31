@@ -22,12 +22,12 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Contently.ContenTypes.Simple\Contently.ContentTypes.Simple.csproj" />
     <ProjectReference Include="..\COntently.Core\Contently.Core.csproj" />
     <ProjectReference Include="..\Contently.Data.Dapper\Contently.Data.Dapper.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Error\" />
-    <Folder Include="Views\Page\" />
   </ItemGroup>
 
 </Project>
