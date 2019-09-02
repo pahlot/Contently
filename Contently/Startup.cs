@@ -28,12 +28,18 @@ namespace Contently
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureRouting(setupAction =>
+            {
+                setupAction.LowercaseUrls = true;
+            });
+
             // Add framework services.
             services.AddMvc();
 
             // add data services
             services.AddScoped<IContentDataService<RoutablePage>, MockPageRepository>();
-            services.AddSingleton<ContentTypeDiscoveryService, ContentTypeDiscoveryService>();
+            services.AddSingleton<IContentTypeDiscoveryService, ContentTypeDiscoveryService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +64,10 @@ namespace Contently
             app.UseMvc(routes =>
             {
                 // Put all routes first so they get handled first. The Contently UrlSLug handler should only try last. It'll also handle 404 errors
+                //routes.MapRoute(
+                //      name: "AreaRoutes",
+                //      template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                
                 routes.MapRoute(
                     "default",
                     "{controller=Home}/{action=Index}/{id?}");

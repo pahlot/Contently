@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Contently.Core.Data.Interfaces;
 using Contently.Core.Domain;
+using Contently.Core.DiscoveryServices;
 
 namespace Contently.Controllers
 {
@@ -15,11 +16,13 @@ namespace Contently.Controllers
         //    return View();
         //}
 
-        protected IContentDataService<RoutablePage> dataService;
+        private readonly IContentDataService<RoutablePage> dataService;
+        private readonly IContentTypeDiscoveryService discoveryService;
 
-        public PageController(IContentDataService<RoutablePage> ds)
+        public PageController(IContentDataService<RoutablePage> dataService, IContentTypeDiscoveryService discoveryService)
         {
-            dataService = ds;
+            this.dataService = dataService;
+            this.discoveryService = discoveryService;
         }
 
         public IActionResult Index(string id)
@@ -34,6 +37,11 @@ namespace Contently.Controllers
         {
             var page = dataService.GetOne(Guid.Parse(id));
             return View("Index", page);
+        }
+
+        public IActionResult GetContentTypes()
+        {
+            return Ok(discoveryService.Discover());
         }
 
 

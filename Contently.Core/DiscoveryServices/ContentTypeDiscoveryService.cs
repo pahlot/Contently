@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Contently.Core.DiscoveryServices
 {
-    public class ContentTypeDiscoveryService : IContentTypeDiscoryService
+    public class ContentTypeDiscoveryService : IContentTypeDiscoveryService
     {
         private IEnumerable<string> contentTypes;
 
