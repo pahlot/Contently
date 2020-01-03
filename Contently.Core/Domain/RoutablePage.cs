@@ -1,5 +1,6 @@
 ﻿using Contently.Core.Domain.Interfaces;
 using System;
+using System.Collections.Generic;
 
 namespace Contently.Core.Domain
 {
@@ -7,6 +8,14 @@ namespace Contently.Core.Domain
     { 
         public string AreaName => "";
         public string RoutingController => Content?.Controller;
+
+        public bool IsRootPage { get; set; }
+
+        public IRoutablePage ParentPage { get; set; }
+
+        public IList<IRoutablePage> ChildPages { get; set; } = new List<IRoutablePage>();
+
+        public int DisplayOrder { get; set; }
 
         public string Title { get; set; }
 
@@ -22,5 +31,6 @@ namespace Contently.Core.Domain
         public DateTime PublishDate { get; set; }
         public DateTime UnPublishDate { get; set; }
         public IContentItem Content { get; set; }
+       
     }
 }

@@ -16,9 +16,7 @@ namespace Contently.Core.Web.Routing
             this.target = target;
             this.dataService = dataService;
         }
-
-        
-
+                
         public async Task RouteAsync(RouteContext context)
         {
             var requestPath = context.HttpContext.Request.Path.Value.ToLower();
@@ -31,10 +29,10 @@ namespace Contently.Core.Web.Routing
                 requestPath = requestPath.Substring(1);
             }
 
-            if (requestPath.Contains("/edit"))
+            if (requestPath.Contains("/edit-content"))
             {
                 isEditMode = true;
-                requestPath = requestPath.Replace("/edit", "");
+                requestPath = requestPath.Replace("/edit-content", "");
             }
 
             // Get the slug that matches.

@@ -1,4 +1,6 @@
-﻿namespace Contently.Core.Domain
+﻿using System.Collections.Generic;
+
+namespace Contently.Core.Domain
 {
     /// <summary>
     /// Represents a basic FLAT menu structure
@@ -8,6 +10,17 @@
     public class MenuItem
     {
         public string Name { get; set; }
-        public string Path { get; set; }
+
+        private string _path;
+        public string Path {
+            set { _path = value; }
+            get
+            {
+                return (string.IsNullOrEmpty(_path) ? "/" : _path);
+            }
+        }
+
+        public MenuItem Parent { get; set; }
+        public IEnumerable<MenuItem> ChildMenuItems { get; set; }
     }
 }

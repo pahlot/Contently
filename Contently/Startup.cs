@@ -28,10 +28,10 @@ namespace Contently
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureRouting(setupAction =>
-            {
-                setupAction.LowercaseUrls = true;
-            });
+            //services.ConfigureRouting(setupAction =>
+            //{
+            //    setupAction.LowercaseUrls = true;
+            //});
 
             // Add framework services.
             services.AddMvc();
