@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Contently.Core.Domain.Interfaces
 {
-    public interface IRoutablePage
+    public interface IRoutablePage : IEntity
     {
         #region Route specific fields
 
@@ -43,5 +43,7 @@ namespace Contently.Core.Domain.Interfaces
         bool IsPublished { get; set; }
         DateTime PublishDate { get; set; }
         DateTime UnPublishDate { get; set; }
+
+        IList<SitePage> Sites { get; set; }
     }
 }

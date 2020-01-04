@@ -8,6 +8,7 @@ using Contently.Core.Data.Interfaces;
 using Contently.Data.Dapper;
 using Contently.Core.Web.Routing;
 using Contently.Core.DiscoveryServices;
+using Contently.Core.RouteStores;
 
 namespace Contently
 {
@@ -39,6 +40,8 @@ namespace Contently
             // add data services
             services.AddScoped<IContentDataService<RoutablePage>, MockPageRepository>();
             services.AddSingleton<IContentTypeDiscoveryService, ContentTypeDiscoveryService>();
+            services.AddSingleton<IRouteStore, InMemoryRouteStore>();
+
 
         }
 
@@ -73,7 +76,9 @@ namespace Contently
                     "{controller=Home}/{action=Index}/{id?}");
 
                 // TODO: add all this into a registration extension so we're not duplicating code
-                routes.Routes.Add(new UrlSlugRoute(routes.DefaultHandler, new MockPageRepository()));
+                routes.Routes.Add(new UrlSlugRouter(routes.DefaultHandler, 
+                    dataService: routes.ServiceProvider.GetRequiredService<IContentDataService<RoutablePage>>(), 
+                    routeStore: routes.ServiceProvider.GetRequiredService<IRouteStore>()));
 
             });
         }

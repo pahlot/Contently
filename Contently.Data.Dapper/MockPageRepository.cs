@@ -11,7 +11,7 @@ namespace Contently.Data.Dapper
     {
         public IEnumerable<RoutablePage> GetAll()
         {
-            var home = new RoutablePage() { Name = "Home", Slug = "", Content = new SimpleContent() { Body = "This is the home page! Hello World!" }, IsPublished = true, IsRootPage =true, Id = Guid.Parse("f51007ee-923d-42d7-833b-335df109ce38") };
+            var home = new RoutablePage() { Name = "Home", Slug = "/", Content = new SimpleContent() { Body = "This is the home page! Hello World!" }, IsPublished = true, IsRootPage =true, Id = Guid.Parse("f51007ee-923d-42d7-833b-335df109ce38") };
             var root1 = new RoutablePage() { Name = "test 1", Slug = "/test1", Content = new SimpleContent() { Body = "This is test page 1" }, IsPublished = true, Id = Guid.Parse("f51007ee-923d-42d7-822b-335df109ce38") };
             var root2 = new RoutablePage()
             {

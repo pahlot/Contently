@@ -31,6 +31,11 @@ namespace Contently.Core.Domain
         public DateTime PublishDate { get; set; }
         public DateTime UnPublishDate { get; set; }
         public IContentItem Content { get; set; }
+
+        /// <summary>
+        /// Each page can be assigned to multiple sites
+        /// </summary>
+        public IList<SitePage> Sites { get; set; } = new List<SitePage>();
        
     }
 }

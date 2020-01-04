@@ -5,7 +5,7 @@
     /// </summary>
     public interface IContentItem
     {
-        string Controller { get; }
+       string Controller { get; }
        IContentTemplate Template { get; }
     }
 }
