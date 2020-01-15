@@ -2,7 +2,7 @@
 
 namespace Contently.Core.Domain
 {
-    public class EntityBaseWithTypedId<T>
+    public class EntityBaseWithTypedId<T> : IEntityBaseWithTypedId<T>
     {
         public T Id { get; set; }
 

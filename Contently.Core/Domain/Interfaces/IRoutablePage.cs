@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Contently.Core.Domain.Interfaces
 {
-    public interface IRoutablePage : IEntity
+    public interface IRoutablePage : IEntityBaseWithTypedId<Guid>
     {
         #region Route specific fields
 

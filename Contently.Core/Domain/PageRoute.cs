@@ -11,7 +11,7 @@ namespace Contently.Core.Domain
 
         public PageRoute(SitePage sitePage)
         {
-            Domain = sitePage.Site.Domain;
+            //Domain = sitePage.Site.PrimaryDomain;
             Slug = sitePage.Page.Slug;
         }
 
@@ -30,6 +30,7 @@ namespace Contently.Core.Domain
         /// </summary>
         public Guid PageId { get; set; }
 
+        // TODO: need to think this through with aliases
         public string FullyQualifiedName => string.Concat(Domain, Slug);
 
         ///// <summary>

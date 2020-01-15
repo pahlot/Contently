@@ -64,9 +64,10 @@ namespace Contently.Data.Dapper
             throw new NotImplementedException();
         }
 
-        public IEnumerable<MenuItem> GetMenu()
+        public IEnumerable<MenuItem> GetMenu(Guid siteId)
         {
-            var all = GetAll().Where(x => x.IsPublished);
+            var all = GetAll()
+                .Where(x => x.IsPublished);
             var menu = all.Where(x => x.IsRootPage)
                 .Select(m => new MenuItem() // Home
                 {
