@@ -38,7 +38,7 @@ namespace Contently.Core.Web.Routing
 
             string routableSlug = requestPath.ToLower();
 
-            var pageId = routeStore.GetPageForRequest(routableSlug, context.HttpContext.Request.Host.Value);
+            var pageId = routeStore.GetPageForRequest(routableSlug, context.HttpContext.Request.Host.Host);
 
             if (pageId.HasValue)
             {

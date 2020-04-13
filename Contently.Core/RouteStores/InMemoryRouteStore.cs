@@ -17,7 +17,7 @@ namespace Contently.Core.RouteStores
             Build(pages);
         }
 
-        public ConcurrentDictionary<string, Guid> RouteTable { get; private set; }
+        public ConcurrentDictionary<string, Guid> RouteTable { get; private set; } = new ConcurrentDictionary<string, Guid>();
 
         public void AddOrUpdateRouteTable(PageRoute route)
         {

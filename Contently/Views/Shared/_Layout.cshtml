@@ -4,7 +4,7 @@
 @inject Contently.Core.Data.Interfaces.IContentDataService<RoutablePage> dataService
 
 @{
-    var menu = dataService.GetMenu();
+    var menu = dataService.GetMenuForSite(Context.Request.Host.Host);
 }
 <!DOCTYPE html>
 <html>

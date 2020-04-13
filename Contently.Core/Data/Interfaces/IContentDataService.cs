@@ -20,6 +20,7 @@ namespace Contently.Core.Data.Interfaces
     public interface IContentDataService<TEntity> : IDataServiceWithTypedId<TEntity, Guid> where TEntity : EntityBaseWithTypedId<Guid> {
       
         IEnumerable<MenuItem> GetMenuForSite(Guid siteId);
+        IEnumerable<MenuItem> GetMenuForSite(string hostname);
     }
 
     public interface IDataServiceWithTypedId<TEntity, TId> where TEntity : EntityBaseWithTypedId<TId>

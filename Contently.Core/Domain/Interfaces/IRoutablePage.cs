@@ -45,5 +45,7 @@ namespace Contently.Core.Domain.Interfaces
         DateTime UnPublishDate { get; set; }
 
         IList<SitePage> Sites { get; set; }
+
+        void AddToSite(Site site);
     }
 }

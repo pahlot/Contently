@@ -11,7 +11,9 @@ namespace Contently.Data.Dapper
     {
         public IEnumerable<RoutablePage> GetAll()
         {
-            var home = new RoutablePage() { Name = "Home", Slug = "/", Content = new SimpleContent() { Body = "This is the home page! Hello World!" }, IsPublished = true, IsRootPage =true, Id = Guid.Parse("f51007ee-923d-42d7-833b-335df109ce38") };
+            var site = new Site() { Name = "Contently", Id = Guid.NewGuid(), PrimaryDomain = "localhost" };
+
+            var home = new RoutablePage() {  Name = "Home", Slug = "/", Content = new SimpleContent() { Body = "This is the home page! Hello World!" }, IsPublished = true, IsRootPage =true, Id = Guid.Parse("f51007ee-923d-42d7-833b-335df109ce38") };
             var root1 = new RoutablePage() { Name = "test 1", Slug = "/test1", Content = new SimpleContent() { Body = "This is test page 1" }, IsPublished = true, Id = Guid.Parse("f51007ee-923d-42d7-822b-335df109ce38") };
             var root2 = new RoutablePage()
             {
@@ -38,6 +40,8 @@ namespace Contently.Data.Dapper
             home.ChildPages.Add(root1);
             home.ChildPages.Add(root2);
             home.ChildPages.Add(root3);
+
+            home.AddToSite(site);
 
 
             return new[]
@@ -68,6 +72,72 @@ namespace Contently.Data.Dapper
         {
             var all = GetAll()
                 .Where(x => x.IsPublished);
+            var menu = all.Where(x => x.IsRootPage)
+                .Select(m => new MenuItem() // Home
+                {
+                    Name = m.Name,
+                    Path = m.Slug
+                })
+                .Union(all.Where(x => !x.IsRootPage)
+                    .Select(m => new MenuItem()
+                    {
+                        Name = m.Name,
+                        Path = m.Slug,
+                        ChildMenuItems = m.ChildPages.Select(c => new MenuItem()
+                        {
+                            Name = c.Name,
+                            Path = c.Slug
+                        })
+                    }));
+
+            return menu;
+        }
+
+        public IEnumerable<MenuItem> GetMenuForSite(Guid siteId)
+        {
+            var all = GetAll()
+                 .Where(x => x.IsPublished);
+            var menu = all.Where(x => x.IsRootPage)
+                .Select(m => new MenuItem() // Home
+                {
+                    Name = m.Name,
+                    Path = m.Slug
+                })
+                .Union(all.Where(x => !x.IsRootPage)
+                    .Select(m => new MenuItem()
+                    {
+                        Name = m.Name,
+                        Path = m.Slug,
+                        ChildMenuItems = m.ChildPages.Select(c => new MenuItem()
+                        {
+                            Name = c.Name,
+                            Path = c.Slug
+                        })
+                    }));
+
+            return menu;
+        }
+
+        public IQueryable<RoutablePage> Query()
+        {
+            throw new NotImplementedException();
+        }
+
+        public RoutablePage AddOrUpdate(RoutablePage entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Delete(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<MenuItem> GetMenuForSite(string hostname)
+        {
+            var all = GetAll()
+                 .Where(x => x.IsPublished)
+                 .Where(x=> x.Sites.Where(s=> s.Site.PrimaryDomain == hostname).Any() || x.Sites.Where(s => s.Site.Aliases.Contains(hostname)).Any());
             var menu = all.Where(x => x.IsRootPage)
                 .Select(m => new MenuItem() // Home
                 {

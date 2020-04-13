@@ -1,6 +1,7 @@
 ﻿using Contently.Core.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Contently.Core.Domain
 {
@@ -36,6 +37,25 @@ namespace Contently.Core.Domain
         /// Each page can be assigned to multiple sites
         /// </summary>
         public IList<SitePage> Sites { get; set; } = new List<SitePage>();
+
+        public void AddToSite(Site site)
+        {
+            if (Sites.Where(x => x.SiteId == site.Id).Any())
+                return;
+
+            Sites.Add(new SitePage()
+            {
+                Page = this,
+                PageId = Id,
+                Site = site,
+                SiteId = site.Id
+            });
+
+            foreach(var child in ChildPages)
+            {
+                child.AddToSite(site);
+            }
+        }
        
     }
 }
