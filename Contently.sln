@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ContentTypes", "ContentType
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contently.ContentTypes.Simple", "Contently.ContenTypes.Simple\Contently.ContentTypes.Simple.csproj", "{69FA117A-3403-4D07-A25C-1D3B7795F235}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contently.Web.Admin", "Web\Contently.Web.Admin\Contently.Web.Admin.csproj", "{52473854-2C06-4559-A23D-FC27AD67AFEA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{69FA117A-3403-4D07-A25C-1D3B7795F235}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69FA117A-3403-4D07-A25C-1D3B7795F235}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69FA117A-3403-4D07-A25C-1D3B7795F235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52473854-2C06-4559-A23D-FC27AD67AFEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52473854-2C06-4559-A23D-FC27AD67AFEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52473854-2C06-4559-A23D-FC27AD67AFEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52473854-2C06-4559-A23D-FC27AD67AFEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
